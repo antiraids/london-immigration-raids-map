@@ -8,6 +8,7 @@ Created on Sat Nov 30 17:00:28 2019
 import folium
 import geopandas as gpd
 import pandas as pd
+from folium.plugins import Search
 
 # Create map, focus on London
 ldn = folium.Map(location=[51.53, -0.11], tiles='cartodbpositron',
@@ -49,7 +50,7 @@ jsontxt = data.to_json()
 # =============================================================================
 
 # Create Choropleth map with custom bins
-count_bins = [1, 50, 100, 500, 1000, 1250]
+count_bins = [1, 100, 300, 500, 1000, 1250]
 
 chorototal = folium.Choropleth(
 geo_data=jsontxt,
@@ -60,23 +61,32 @@ geo_data=jsontxt,
     fill_color='YlOrRd',
     fill_opacity=0.7,
     line_opacity=0.2,
-#    bins=count_bins,
+    bins=count_bins,
     highlight=True,
     legend_name='Number of raids'
 ).add_to(ldn)
 
 # Add tooltips with area details
 folium.GeoJsonTooltip(
-        fields=['PostDist', 'Locale'],
-        labels=False
+        fields=['PostDist', 'Locale', 'Count'],
+        aliases=['Postcode', 'Place', '# raids'],
         ).add_to(chorototal.geojson)
 
 # Create additional layer for 'raids by population'
 popn = pd.read_csv('Data\\LondonPop.csv', index_col='Postcode')
+# Add in the missing district populations
+missing_pop = pd.read_csv('RawData\\missingpop.csv', header=None)
+missing_pop = missing_pop.dropna()
+missing_pop.columns = ['id', 'Postcode', 'Residents']
+missing_pop = missing_pop.set_index('Postcode')
+missing_pop = missing_pop.drop('id', axis=1)
+popn = pd.concat([popn,missing_pop])
 popn = popn.join(data.set_index('PostDist')['Count'])
 popn['Rate'] = (popn['Count'] / popn['Residents'])*1000
+popn.to_csv('Data\\PopnRaidsRate.csv')
 
-popn_bins = list(popn['Rate'].quantile([0, 0.12, 0.25, 0.5, 0.75, 1]))
+#popn_bins = list(popn['Rate'].quantile([0, 0.12, 0.25, 0.5, 0.75, 1]))
+popn_bins = [0.1,2,4,6,8,10,20,70]
 
 chororate = folium.Choropleth(
     geo_data=jsontxt,
@@ -97,8 +107,16 @@ folium.GeoJsonTooltip(
         labels=False
         ).add_to(chororate.geojson)
 
+folium.LayerControl(collapsed=False).add_to(ldn)
 
-folium.LayerControl().add_to(ldn)
+districtsearch = Search(
+    layer=chorototal,
+    geom_type='Polygon',
+    placeholder='Search for a postcode district',
+    collapsed=False,
+    search_label='PostDist',
+    weight=3
+).add_to(ldn)
 
 # Save the output
 outfp = r'choropleth.html'
