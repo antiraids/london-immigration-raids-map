@@ -18,7 +18,7 @@ ldn = folium.Map(location=[51.53, -0.11], tiles='cartodbpositron',
 # .shp to JSON
 # =============================================================================
 
-data_shp = 'Data\TotalLondonPostcodesWithData.shp'
+data_shp = 'AmendedData\\TotalLondonPostcodesWithData.shp'
 
 # Read Data
 data = gpd.read_file(data_shp)
@@ -53,7 +53,7 @@ jsontxt = data.to_json()
 count_bins = [1, 100, 300, 500, 1000, 1250]
 
 chorototal = folium.Choropleth(
-geo_data=jsontxt,
+    geo_data=jsontxt,
     name='Raids',
     data=data,
     columns=['PostDist', 'Count'],
@@ -73,7 +73,7 @@ folium.GeoJsonTooltip(
         ).add_to(chorototal.geojson)
 
 # Create additional layer for 'raids by population'
-popn = pd.read_csv('Data\\LondonPop.csv', index_col='Postcode')
+popn = pd.read_csv('AmendedData\\LondonPop.csv', index_col='Postcode')
 # Add in the missing district populations
 missing_pop = pd.read_csv('RawData\\missingpop.csv', header=None)
 missing_pop = missing_pop.dropna()
@@ -83,10 +83,10 @@ missing_pop = missing_pop.drop('id', axis=1)
 popn = pd.concat([popn,missing_pop])
 popn = popn.join(data.set_index('PostDist')['Count'])
 popn['Rate'] = (popn['Count'] / popn['Residents'])*1000
-popn.to_csv('Data\\PopnRaidsRate.csv')
+popn.to_csv('AmendedData\\PopnRaidsRate.csv')
+popn = popn[popn['Residents'] > 5000] # remove small pop outliers from rate
 
-#popn_bins = list(popn['Rate'].quantile([0, 0.12, 0.25, 0.5, 0.75, 1]))
-popn_bins = [0.1,2,4,6,8,10,20,70]
+popn_bins = [0.1,2,4,6,8,10,20]
 
 chororate = folium.Choropleth(
     geo_data=jsontxt,
