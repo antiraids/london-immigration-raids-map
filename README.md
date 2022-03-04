@@ -4,12 +4,12 @@ This repo contains the data behind the https://antiraids.github.io/ FOI investig
 
 ### How to used
 
-1. `LondonRaids.py`: munge the FOI data into a useable format
-2. `MakeItInteractive.py`: making the interactive choropleth
-3. `ByEthnicity.py`: munging the ethnicity data
-4. `Trends.py`: visualise, calculate trends
-5. `TellingTheStory.ipynb`: making static plots for the site, along with the narrative of the analysis
-6. `interactive_line.ipynb`: making interactive line plots of raids per area per year, for the site
+1. ☑ `LondonRaids.py`: munge the FOI data into a useable format
+2. ☑ `MakeItInteractive.py`: making the interactive choropleth
+3. ☑ `ByEthnicity.py`: munging the ethnicity data
+4. ☑ `Trends.py`: visualise, calculate trends
+5. ☑ `TellingTheStory.ipynb`: making static plots for the site, along with the narrative of the analysis
+6. ☑ `interactive_line.ipynb`: making interactive line plots of raids per area per year, for the site
 
 ### Data sources
 
@@ -47,6 +47,7 @@ Data file | Source | Used in
 
 - Straight-up Python for the data munging and basic analysis
 - Folium and Geopandas packages to visualise the data in a choropleth map, weighed by number of immigration raids since 2014, and also optionally by immigration raids per 1,000 residents.
+- mpld3 for the interactive charts
 
 Hat tips to:
 
