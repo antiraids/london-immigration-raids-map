@@ -45,32 +45,10 @@ jsontxt = data.to_json()
     "geometry": {"type": "Polygon", "coordinates": [[[-0.22251212906295376,
 """
 
+
 # =============================================================================
-# Visualise with Folium
+# Get population data
 # =============================================================================
-
-# Create Choropleth map with custom bins
-count_bins = [1, 100, 300, 500, 1000, 1250]
-
-chorototal = folium.Choropleth(
-    geo_data=jsontxt,
-    name='Raids',
-    data=data,
-    columns=['PostDist', 'Count'],
-    key_on='feature.properties.PostDist',
-    fill_color='YlOrRd',
-    fill_opacity=0.7,
-    line_opacity=0.2,
-    bins=count_bins,
-    highlight=True,
-    legend_name='Number of raids'
-).add_to(ldn)
-
-# Add tooltips with area details
-folium.GeoJsonTooltip(
-        fields=['PostDist', 'Locale', 'Count'],
-        aliases=['Postcode', 'Place', '# raids'],
-        ).add_to(chorototal.geojson)
 
 # Create additional layer for 'raids by population'
 popn = pd.read_csv('AmendedData\\LondonPop.csv', index_col='Postcode')
@@ -88,11 +66,43 @@ popn = popn[popn['Residents'] > 5000] # remove small pop outliers from rate
 
 popn_bins = [0.1,2,4,6,8,10,20]
 
+# Make a GeoDataFrame including rate info
+data2 = data.set_index('PostDist').join(popn[['Rate']]).reset_index()
+data2['Rate'] = data2['Rate'].round(1)
+jsontxt2 = data2.to_json()
+
+# =============================================================================
+# Visualise with Folium
+# =============================================================================
+
+# Create Choropleth map with custom bins
+count_bins = [1, 100, 300, 500, 1000, 1250]
+
+chorototal = folium.Choropleth(
+    geo_data=jsontxt2,
+    name='Raids',
+    data=data2,
+    columns=['PostDist', 'Count'],
+    key_on='feature.properties.PostDist',
+    fill_color='YlOrRd',
+    fill_opacity=0.7,
+    line_opacity=0.2,
+    bins=count_bins,
+    highlight=True,
+    legend_name='Number of raids'
+).add_to(ldn)
+
+# Add tooltips with area details
+folium.GeoJsonTooltip(
+        fields=['PostDist', 'Locale', 'Count'],
+        aliases=['Postcode', 'Place', '# raids'],
+        ).add_to(chorototal.geojson)
+
 chororate = folium.Choropleth(
-    geo_data=jsontxt,
+    geo_data=jsontxt2,
     name='Raids_per_1000',
-    data=popn.reset_index(),
-    columns=['Postcode', 'Rate'],
+    data=data2,
+    columns=['PostDist', 'Rate'],
     key_on='feature.properties.PostDist',
     fill_color='PuRd',
     fill_opacity=0.7,
@@ -103,8 +113,8 @@ chororate = folium.Choropleth(
 ).add_to(ldn)
 
 folium.GeoJsonTooltip(
-        fields=['PostDist', 'Locale'],
-        labels=False
+        fields=['PostDist', 'Locale', 'Rate'],
+        aliases=['Postcode', 'Place', 'Raids per 1000 people']
         ).add_to(chororate.geojson)
 
 folium.LayerControl(collapsed=False).add_to(ldn)
