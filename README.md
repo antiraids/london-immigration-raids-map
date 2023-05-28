@@ -10,7 +10,7 @@ This repo contains the data behind the https://antiraids.github.io/ FOI investig
 4. ☑ `Trends.py`: visualise, calculate trends
 5. ☑ `TellingTheStory.ipynb`: making static plots for the site, along with the narrative of the analysis
 6. ☑ `interactive_line.ipynb`: making interactive line plots of raids per area per year, for the site
-
+7. ☑ `EthnicityRegression.ipynb`: investigating the ethnicity correlations using Bayesian regression. Original investigation was done in the `ethnicity_regression.py` file, changed to .ipynb for ease of following the flow.
 ### Data sources
 
 Data file | Source | Used in

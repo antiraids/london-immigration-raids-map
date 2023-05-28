@@ -109,4 +109,5 @@ for c in top_5['Destination']:
     y = by_time_20.loc[(by_time_20['Destination']==c)&(by_time_20['Year']==yr),
                        'Deportations'].values[0]
     ax.annotate(c, (2022, y), alpha=0.5)
+plt.tight_layout()
 plt.savefig('Outputs\\Deportations_by_place_2016_by_year.png')
