@@ -36,6 +36,7 @@ Data file | Source | Used in
 `RawData\PostDistNames.csv` | [Wikipedia](https://en.wikipedia.org/w/index.php?title=London_postal_district&oldid=917085462) | `LondonRaids.py`, to assign names to postcode areas
 `RawData\ECPostDistNames.csv` | [Wikipedia](https://en.wikipedia.org/wiki/EC_postcode_area) | `LondonRaids.py`, to assign names to postcode areas
 `RawData\Nomis KS101EW usual resident population London.csv` | [Nomis](http://www.nomisweb.co.uk/census/2011/ks101ew) | `LondonRaids.py`
+`RawData\returns-datasets-dec-2022.xlsx` | [Gov.uk](https://www.gov.uk/government/statistical-data-sets/returns-and-detention-datasets#returns) | `deportation_data_investigation.py`
 
 \* not included in this repo for size reasons (as it is 85 MB)
 
@@ -54,6 +55,8 @@ Hat tips to:
 - [this AutoGIS walk-through](https://automating-gis-processes.github.io/2016/Lesson5-interactive-map-folium.html)
 - [Folium's clear documentation](https://python-visualization.github.io/folium/quickstart.html#Choropleth-maps)
 - [this Towards Data Science walk-through](https://towardsdatascience.com/lets-make-a-map-using-geopandas-pandas-and-matplotlib-to-make-a-chloropleth-map-dddc31c1983d)
+- [Bambi](https://bambinos.github.io/bambi/index.html) and [walkthroughs](https://bambinos.github.io/bambi/notebooks/ESCS_multiple_regression.html) for the Bayesian regression, 
+- [Box-Cox transformations](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.boxcox.html), in general
 
 **Notes**:
 
