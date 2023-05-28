@@ -76,7 +76,7 @@ jsontxt2 = data2.to_json()
 # =============================================================================
 
 # Create Choropleth map with custom bins
-count_bins = [1, 100, 300, 500, 1000, 1250]
+count_bins = [1, 100, 300, 500, 1000, 1300]
 
 chorototal = folium.Choropleth(
     geo_data=jsontxt2,

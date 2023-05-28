@@ -96,6 +96,21 @@ df2021.index.name = 'PostDist'
 df2021 = df2021.drop(['Total'])
 df2021.head()
 
+# 2022 data
+df2022 = pd.read_csv(r'RawData\FOI 2022 immigration raids - FOI 76110.csv',
+                     skiprows=10)
+df2022 = df2022.dropna(axis=0, how='any', subset=['Postcode'])
+df2022 = df2022.drop(['Unnamed: 0', 'Unnamed: 1'], axis=1)
+df2022.dropna(inplace=True)
+df2022.columns = ['PostDist', 2022]
+# Postcodes missing if empty => code "<5" as 3
+df2022[2022] = df2022[2022].replace('<5', 3)
+df2022.set_index('PostDist', inplace=True)
+df2022[2022] = df2022[2022].astype(int)
+# df2022.head()
+# df2022.tail()
+# df2022.info()
+
 # =============================================================================
 # Prep assisting data
 # =============================================================================
@@ -142,8 +157,8 @@ ldn_raids_by_yr = ldn_raids_by_yr.join(df2019)
 ldn_raids_by_yr = ldn_raids_by_yr[[2014, 2015, 2016, 2017, 2018, 2019,
                                    'Total', 'Grand Total']]
 ldn_raids_by_yr = ldn_raids_by_yr.append(dfS)
-ldn_raids_by_yr = ldn_raids_by_yr.join(df2020).join(df2021)
-ldn_raids_by_yr = ldn_raids_by_yr[list(range(2014,2022))]
+ldn_raids_by_yr = ldn_raids_by_yr.join(df2020).join(df2021).join(df2022)
+ldn_raids_by_yr = ldn_raids_by_yr[list(range(2014,2023))]
 #for col in ldn_raids_by_yr.columns:
 #    print(col, '\n', ldn_raids_by_yr[ldn_raids_by_yr[col].isna()])
 # Only nulls are ECs for 2019 -- because there were no raids in the data

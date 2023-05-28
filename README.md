@@ -29,9 +29,10 @@ Data file | Source | Used in
 `RawData\57252 xxx Appendix A.xlsx` | Home Office FOI | `LondonRaids.py`
 `RawData\56323 xxx Annex.xlsx` | Home Office FOI | `LondonRaids.py`
 `RawData\56325 xxx Annex.xlsx` | Home Office FOI | `LondonRaids.py`
-`RawData\\57894 PDF scrape_2019RaidsENW.txt` | Home Office FOI | `LondonRaids.py`
-`RawData\\64002 xxx Annex.xlsx` | Home Office FOI | `LondonRaids.py`
-`RawData\\68195 xxx Annex B.xlsx` | Home Office FOI | `LondonRaids.py`
+`RawData\\57894 PDF scrape_2019RaidsENW.txt` (for 2019) | Home Office FOI | `LondonRaids.py`
+`RawData\\64002 xxx Annex.xlsx` (for 2020) | Home Office FOI | `LondonRaids.py`
+`RawData\\68195 xxx Annex B.xlsx` (for 2021) | Home Office FOI | `LondonRaids.py`
+`RawData\\FOI 2022 immigration raids - FOI 76110.csv` (for 2022) | Home Office FOI | `LondonRaids.py`
 `PostalDistrict.shp`\* | From [University of Edinburgh](https://doi.org/10.7488/ds/1947), via [StackExchange](https://gis.stackexchange.com/questions/32321/seeking-postcode-shapefiles-for-uk) | `LondonRaids.py`
 `RawData\PostDistNames.csv` | [Wikipedia](https://en.wikipedia.org/w/index.php?title=London_postal_district&oldid=917085462) | `LondonRaids.py`, to assign names to postcode areas
 `RawData\ECPostDistNames.csv` | [Wikipedia](https://en.wikipedia.org/wiki/EC_postcode_area) | `LondonRaids.py`, to assign names to postcode areas
@@ -42,7 +43,7 @@ Data file | Source | Used in
 
 ### Notes
 
-**Timespan:** the FOI data runs from 2014 to 2021 inclusive.
+**Timespan:** the FOI data runs from 2014 to 2022 inclusive.
 
 **Tools used:**
 

@@ -12,7 +12,7 @@ import seaborn as sns; sns.set(); sns.set_palette("bright")
 import numpy as np
 
 start = 2014
-stop = 2021
+stop = 2022
 
 # =============================================================================
 # Trend lines
@@ -113,7 +113,7 @@ for pc in nonsmall_pcs:
         rate_change.loc[pc, 'Total'] = total
 print(rate_change)
 
-# Distribution of % change 2014 to 2021
+# Distribution of % change 2014 to 2022
 box = sns.boxplot(x=rate_change[rate_change['Year']==stop]['Change'])
 boxticks = box.get_xticks()
 boxxlabels = ['{:,.0f}'.format(x) + "%" for x in boxticks]
